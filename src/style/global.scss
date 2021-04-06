@@ -1,0 +1,95 @@
+@import './variables.scss';
+
+ /* 滚动条 */
+.ApplicationEditor {
+  *::-webkit-scrollbar {
+    display: block;
+    width: 2px;
+    height: 2px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+    border-radius: 2px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+
+  .form-item {
+    margin-bottom: 10px;
+  }
+
+  .form-item:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ElementUI 样式重置 */
+
+/* el-input */
+.ApplicationEditor {
+  .el-input__inner {
+    background:$input-background-color;
+    color: $text-color-gray;
+    border-color: $input-border-color;
+    border-radius: 0px;
+  }
+
+  .el-input__inner:hover {
+    border-color: $primary-color;
+  }
+
+  .el-input.is-disabled .el-input__inner {
+    background:$input-background-color;
+    color: $text-color;
+    border-color:$input-background-color;
+    border-radius: 0px;
+  }
+
+  .el-input.el-input--mini.is-disabled {
+    opacity: 0.5;
+  }
+
+  .el-input--mini .el-input__icon {
+    line-height: 24px;
+    color: $text-color;
+  }
+
+  .el-input--mini .el-input__inner {
+    height: 24px;
+    line-height: 24px;
+  }
+}
+
+/* el-collapse */
+.ApplicationEditor {
+  .el-collapse {
+    border: none;
+  }
+  .el-collapse-item__header {
+    height: $header-height;
+    line-height: $header-height;
+    padding-left: 15px;
+    background: $panel-background-color;
+    border: none;
+    color: $text-color !important;
+    font-weight: bold;
+    font-size: inherit;
+    letter-spacing: 2px;
+  }
+  .el-collapse-item__wrap,
+  .el-collapse-item__content {
+    background: transparent;
+    border: none;
+  }
+  .el-collapse-item__content {
+    padding: 5px 0 5px 15px;
+    color: $text-color;
+  }
+}

@@ -1,0 +1,44 @@
+<template>
+  <div class="Test">Test: {{name1}} - {{name2}}</div>
+</template>
+<script lang="ts">
+import { Constructor, PropOptions } from 'vue/types/options'
+import { Component, Mixins, Prop, Vue } from 'vue-property-decorator'
+import { createDecorator } from 'vue-class-component'
+import TestSuper from './TestSuper.vue'
+import TestSuper2 from './TestSuper2.vue'
+
+function MyProp (options?: PropOptions | Constructor[] | Constructor) {
+  const r =  Prop(options)
+  return (target: Vue, key: string) => {
+    r(target, key)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    createDecorator(function (componentOptions: any, k: string) {
+      if (!componentOptions.__mani__attrs) {
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        componentOptions.__mani__attrs = {}
+      }
+      componentOptions.__mani__attrs[k] = 'test'
+    })(target, key);
+  }
+}
+
+@Component
+export default class Test extends Mixins(TestSuper, TestSuper2) {
+  @MyProp()
+  private name1!: string
+
+  @MyProp()
+  private name2!: string
+
+  private show () {
+    console.log(this.name0)
+  }
+}
+</script>
+<style scoped lang="scss">
+@import '~@/style/variables.scss';
+.Test {
+  background: red;
+}
+</style>
