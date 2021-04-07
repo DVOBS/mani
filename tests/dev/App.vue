@@ -15,7 +15,10 @@ import Jszip from 'jszip'
 import Test from './Test.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-console.log(Test)
+console.log(Test as any)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+console.log((Test as any).options)
+console.log(new Test())
 
 @Component({
   components: {ApplicationEditor, Test },

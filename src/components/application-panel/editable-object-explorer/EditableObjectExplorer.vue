@@ -56,6 +56,7 @@ export default class EditableObjectExplorer extends Vue {
   background: $panel-background-color-darken;
   height: 100%;
   padding: 10px;
+  overflow-y: auto;
   .editable-object-folders {
     margin-top: 4px;
   }

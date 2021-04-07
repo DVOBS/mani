@@ -8,7 +8,7 @@ import TabInfo from '@/components/application-editor/object-editor-tabs/TabInfo'
 @Component
 export default class ObjectEditor extends Vue {
   @Prop({ required: true })
-  private tabInfo!: TabInfo;
+  protected tabInfo!: TabInfo;
 
   public get tabInfoKey() {
     const tabInfo = this.tabInfo

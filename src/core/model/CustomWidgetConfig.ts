@@ -1,6 +1,6 @@
 import { JsonObject, JsonProperty } from '@/core/json2typescript'
 import EditableObject from './EditableObject';
-import generateId from './generateId';
+import generateId from '../generateId';
 
 /** 自定义组件配置 */
 @JsonObject('CustomWidgetConfig')

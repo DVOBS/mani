@@ -182,20 +182,6 @@ export default class ObjectEditorTabs extends Vue {
       left: scrollLeft + dy
     })
   }
-
-  // private created() {
-  //   debugger
-  //   console.log('why!!')
-  // }
-
-  // private beforeDestroy() {
-  //   console.log('why!')
-  // }
-
-  // @Watch('currentTabInfo')
-  // private currentTabInfoChange() {
-  //   console.log('why')
-  // }
 }
 </script>
 <style scoped lang="scss">

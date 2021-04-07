@@ -1,5 +1,9 @@
 <template>
-  <ApplicationContext class="ApplicationEditor" :applicationConfig="applicationConfig" @wheel.native.prevent.stop>
+  <ApplicationContext
+    class="ApplicationEditor"
+    :applicationConfig="applicationConfig"
+    @wheel.native.ctrl.prevent.stop
+  >
     <ApplicationEditorHeader></ApplicationEditorHeader>
     <div class="body">
       <!-- <ApplicationEditorSidebar class="sidebar"></ApplicationEditorSidebar> -->
@@ -10,7 +14,7 @@
             ref="objectEditorTabs"
             :currentTabInfoKey.sync="currentTabInfoKey"
           ></ObjectEditorTabs>
-          <EditableObjectExplorer name="test-1"></EditableObjectExplorer>
+          <div name="test-1"></div>
           <div name="test-2">test-2</div>
           <div name="test-3">test-3</div>
           <div name="test-4">test-4</div>
@@ -22,7 +26,7 @@
 </template>
 <script lang="ts">
 import { VueConstructor } from 'vue/types/vue'
-import { Component, Prop, Provide, Ref, Vue } from 'vue-property-decorator'
+import { Component, Provide, Ref, Vue } from 'vue-property-decorator'
 import { LayoutNode } from '@/components/common/drag-layout/DragLayoutInterface'
 import ApplicationConfig from '@/core/model/ApplicationConfig'
 import EditableObject from '@/core/model/EditableObject'
@@ -33,6 +37,9 @@ import ApplicationEditorHeader from './ApplicationEditorHeader.vue'
 import DragLayoutContext from '@/components/common/drag-layout/DragLayoutContext.vue'
 import ObjectEditorTabs from './object-editor-tabs/ObjectEditorTabs.vue'
 import EditableObjectExplorer from '@/components/application-panel/editable-object-explorer/EditableObjectExplorer.vue'
+
+import File from '@/core/file-model/File'
+import VueFileData from '@/core/file-model/file-data/VueFileData'
 
 @Component({
   name: 'ApplicationEditor',
@@ -51,12 +58,8 @@ export default class ApplicationEditor extends Vue {
   @Ref()
   public objectEditorTabs!: ObjectEditorTabs
 
-  /** 应用配置(只用于初始化) */
-  @Prop()
-  public config !: object
-
   /** 应用配置(实体) */
-  public applicationConfig: ApplicationConfig = new ApplicationConfig()
+  public applicationConfig: ApplicationConfig | null = null
 
   /** 当前激活的对象编辑器的KEY */
   public currentTabInfoKey = ''
@@ -72,12 +75,31 @@ export default class ApplicationEditor extends Vue {
   }
 
   private mounted () {
-    const pageConfigs = this.applicationConfig.pageConfigs
-    window.setTimeout(() => {
-      if (pageConfigs.length) {
-        this.openObjectEditor(pageConfigs[0])
-      }
-    })
+    const file = new File()
+    file.fileName = 'app.vue'
+    file.content = `<template>
+  <p>{{ greeting }} World!</p>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      greeting: "Hello"
+    };
+  }
+};
+<` + `/script>
+
+<style scoped>
+p {
+  font-size: 2em;
+  text-align: center;
+}
+</style>`
+    const vueFileData = new VueFileData(file, '')
+    console.log(vueFileData.VueFileHandler.ast)
+    this.openObjectEditor(vueFileData)
   }
 }
 </script>

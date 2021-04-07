@@ -1,6 +1,6 @@
 import { JsonObject, JsonProperty } from '@/core/json2typescript'
 import EditableObject from './EditableObject';
-import generateId from './generateId';
+import generateId from '../generateId';
 import PageConfig from './PageConfig';
 
 /** 应用配置 */

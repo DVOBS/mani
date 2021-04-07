@@ -6,7 +6,7 @@ export default {
     {
       type: 'tabs',
       children: [
-        { type: 'tab', label: '可编辑对象', name: 'test-1' } ,
+        { type: 'tab', label: '文件', name: 'test-1' } ,
         {type: 'tab', label: '组件', name: 'test-2' }
       ],
       basis: 275
