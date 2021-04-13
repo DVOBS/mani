@@ -5,8 +5,8 @@ import VueFileHandler from './VueFileHandler';
 import generateId from '@/core/generateId';
 
 /** 应用配置 */
-export default class VueFileData extends EditableObject {
-  public id = generateId('VueFileData');
+export default class VueFileEO extends EditableObject {
+  public id = generateId('VueFileEO');
 
   public path!: string;
 
@@ -18,6 +18,7 @@ export default class VueFileData extends EditableObject {
 
   constructor (file: File, directoryPath: string) {
     super()
+    this.name = file.fileName
     this.file = file
     this.path = directoryPath + file.fileName
     this.VueFileHandler = new VueFileHandler({ propsData: { file: this.file }})

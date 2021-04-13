@@ -13,7 +13,7 @@ import { Component, Ref } from 'vue-property-decorator'
 import ObjectEditor from './ObjectEditor.vue';
 import AxisSpace from '@/components/common/axis-space/AxisSpace.vue'
 import CodeEditor from '@/components/common/code-editor/CodeEditor.vue'
-import VueFileData from '@/core/editable-object/VueFileData';
+import VueFileEO from '@/core/editable-object/vue-file/VueFileEO';
 
 @Component({
   components: {
@@ -25,20 +25,16 @@ export default class PageConfigEditor extends ObjectEditor {
   @Ref()
   private codeEditor!: CodeEditor;
 
-  private get vueFileData() {
-    return this.tabInfo.object as VueFileData
+  private get vueFileEO() {
+    return this.tabInfo.object as VueFileEO
   }
 
   private get content() {
-    return this.vueFileData.file.content
+    return this.vueFileEO.file.content
   }
 
   private set content(content: string) {
-    this.vueFileData.file.content = content
-  }
-
-  private mounted() {
-    // this.codeEditor.setContent(this.vueFileData.file.content)
+    this.vueFileEO.file.content = content
   }
 }
 </script>

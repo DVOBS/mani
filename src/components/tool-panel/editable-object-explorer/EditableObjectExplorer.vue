@@ -22,7 +22,6 @@
 <script lang="ts">
 import { Component, Inject, Vue } from "vue-property-decorator";
 import { Collapse, CollapseItem, Input } from "element-ui";
-import { editableObjectTypeInfos } from "@/components/common/util/editableObjectUtil";
 import ApplicationEditor from '@/components/application-editor/ApplicationEditor.vue'
 import CrossRenderView from "@/components/common/cross-render/CrossRenderView.vue"
 import EditableObjectFolder from "./EditableObjectFolder.vue";
@@ -40,14 +39,6 @@ import EditableObjectFolder from "./EditableObjectFolder.vue";
 export default class EditableObjectExplorer extends Vue {
   @Inject('app-editor')
   public appEditor!: ApplicationEditor
-
-  private get currentTabInfoKey() {
-    return this.appEditor.currentTabInfoKey
-  }
-
-  private get editableObjectTypeInfos() {
-    return editableObjectTypeInfos
-  }
 }
 </script>
 <style scoped lang="scss">

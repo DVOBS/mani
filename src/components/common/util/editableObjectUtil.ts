@@ -1,6 +1,6 @@
 import ObjectEditor from '@/components/object-editor/ObjectEditor.vue'
 import EditableObject from '@/core/editable-object/EditableObject'
-import VueFileData from '@/core/editable-object/VueFileData'
+import VueFileEO from '@/core/editable-object/vue-file/VueFileEO'
 
 import { VueConstructor } from 'vue'
 import PageConfigEditor from '@/components/object-editor/PageConfigEditor.vue'
@@ -20,7 +20,7 @@ interface EditableObjectTypeInfo {
 export const editableObjectTypeInfos: EditableObjectTypeInfo[] = [
   {
     name: '页面（pages）',
-    constructor: VueFileData,
+    constructor: VueFileEO,
     editors: [PageConfigEditor],
     icon: ['far', 'file'],
     color: '#cd853f',

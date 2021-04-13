@@ -1,5 +1,5 @@
 <template>
-  <div class="ApplicationEditor">
+  <div class="ApplicationEditor" @wheel.ctrl.prevent.stop>
     <ApplicationEditorHeader></ApplicationEditorHeader>
     <div class="body">
       <!-- <ApplicationEditorSidebar class="sidebar"></ApplicationEditorSidebar> -->
@@ -8,11 +8,11 @@
           <ObjectEditorTabs
             name="main"
             ref="objectEditorTabs"
-            :currentTabInfoKey.sync="currentTabInfoKey"
+            @change="handelObjectEditorTabsChange"
           ></ObjectEditorTabs>
           <div name="test-1"></div>
           <div name="test-2">test-2</div>
-          <div name="test-3">test-3</div>
+          <PropertiesConfigPanel name="test-3"/>
           <div name="test-4">test-4</div>
           <div name="test-5">test-5</div>
         </DragLayoutContext>
@@ -30,9 +30,11 @@ import defaultLayout from './default-layout'
 import ApplicationEditorHeader from './ApplicationEditorHeader.vue'
 import DragLayoutContext from '@/components/common/drag-layout/DragLayoutContext.vue'
 import ObjectEditorTabs from './object-editor-tabs/ObjectEditorTabs.vue'
+import PropertiesConfigPanel from '@/components/tool-panel/properties-config-panel/PropertiesConfigPanel.vue'
+
 import Project from '@/core/model/Project'
 import File from '@/core/model/File'
-import VueFileData from '@/core/editable-object/VueFileData'
+import VueFileEO from '@/core/editable-object/vue-file/VueFileEO'
 
 @Component({
   name: 'ApplicationEditor',
@@ -40,19 +42,20 @@ import VueFileData from '@/core/editable-object/VueFileData'
     ApplicationEditorHeader,
     DragLayoutContext,
     ObjectEditorTabs,
+    PropertiesConfigPanel
   }
 })
 export default class ApplicationEditor extends Vue {
-  @Provide('app-editor')
-  public get appEditor (): ApplicationEditor { return this }
-
   @Ref()
   public objectEditorTabs!: ObjectEditorTabs
+
+  @Provide('app-editor')
+  public get appEditor (): ApplicationEditor { return this }
 
   public project: Project = new Project()
 
   /** 当前激活的对象编辑器的KEY */
-  public currentTabInfoKey = ''
+  public currentEditableObject: EditableObject| null = null
 
   private layoutRootNode: LayoutNode = defaultLayout
 
@@ -64,11 +67,16 @@ export default class ApplicationEditor extends Vue {
     return this.objectEditorTabs.openObjectEditor(object, editor, isPreview)
   }
 
+  /* 事件处理 */
+  private handelObjectEditorTabsChange(object: EditableObject| null) {
+    this.currentEditableObject = object
+  }
+
   private mounted () {
     const file = new File()
     file.fileName = 'app.vue'
     file.content = `<template>
-  <ApplicationContext>{{ greeting }} World!</ApplicationContext>
+  <PageContainer :width="800">{{ greeting }} World!</PageContainer>
 </template>
 
 <script>
@@ -87,9 +95,9 @@ p {
   text-align: center;
 }
 </style>`
-    const vueFileData = new VueFileData(file, '')
-    console.log(vueFileData.VueFileHandler.ast)
-    this.openObjectEditor(vueFileData)
+    const vueFileEO = new VueFileEO(file, '')
+    console.log(vueFileEO.VueFileHandler.ast)
+    this.openObjectEditor(vueFileEO)
   }
 }
 </script>

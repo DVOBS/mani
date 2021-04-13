@@ -66,10 +66,6 @@ export default class ObjectEditorTabs extends Vue {
 
   private currentTabInfo: TabInfo | null = null;
 
-  private get currentTabInfoKey() {
-    return this.currentTabInfo ? this.getTabInfoKey(this.currentTabInfo) : ''
-  }
-
   public openObjectEditor(
     object: EditableObject,
     editor: VueConstructor | undefined | null,
@@ -148,11 +144,13 @@ export default class ObjectEditorTabs extends Vue {
     // tabs.scrollTo({})
   }
 
-  @Watch('currentTabInfoKey')
-  private handleCurrentTabInfoKeyChange() {
-    this.$emit('update:currentTabInfoKey', this.currentTabInfoKey)
+  /* 监听器 */
+  @Watch('currentTabInfo')
+  private handleCurrentTabInfoChange(tabInfo: TabInfo | null) {
+    this.$emit('change', tabInfo?.object)
   }
 
+  /* 事件处理 */
   private handleClose(tabInfo: TabInfo) {
     this.closeTabInfo(tabInfo)
   }
@@ -165,15 +163,6 @@ export default class ObjectEditorTabs extends Vue {
     this.openObjectEditor(tabInfo.object, tabInfo.editor)
   }
 
-  private getTabInfoKey(tabInfo: TabInfo) {
-    return `${tabInfo.editor.name}:${tabInfo.object.id}`
-  }
-
-  private tabInfoEqual(a: TabInfo, b: TabInfo) {
-    return a.object === b.object && a.editor === b.editor;
-    // return a.object === b.object;
-  }
-
   private handleWhell (event: WheelEvent) {
     const dy = event.deltaY / 5
     const tabs = this.tabs
@@ -181,6 +170,17 @@ export default class ObjectEditorTabs extends Vue {
     tabs.scrollTo({
       left: scrollLeft + dy
     })
+  }
+
+  /* 获取 TAB 的 KEY */
+  private getTabInfoKey(tabInfo: TabInfo) {
+    return `${tabInfo.editor.name}:${tabInfo.object.id}`
+  }
+
+  /* 判断 TabInfo 是否相同 */
+  private tabInfoEqual(a: TabInfo, b: TabInfo) {
+    return a.object === b.object && a.editor === b.editor;
+    // return a.object === b.object;
   }
 }
 </script>

@@ -3,15 +3,6 @@
     <div class="header">
       MANI-EDITOR
     </div>
-    <!-- <div class="body">
-      <h1 class="app-name">可编辑对象</h1>
-        <EditableObjectFolder
-          v-for="(typeInfo, i) in editableObjectTypeInfos" :key="i" :typeInfo="typeInfo"
-        ></EditableObjectFolder>
-      <h1 class="app-name">图层</h1>
-      <h1 class="app-name">组件</h1>
-      <CrossRenderView :name="currentTabInfoKey"></CrossRenderView>
-    </div> -->
     <el-collapse accordion>
       <el-collapse-item title="可编辑对象" name="1">
         <EditableObjectFolder
@@ -47,10 +38,6 @@ import CrossRenderView from "@/components/common/cross-render/CrossRenderView.vu
 export default class ApplicationEditorSidebar extends Vue {
   @Inject('app-editor')
   public appEditor!: ApplicationEditor
-
-  private get currentTabInfoKey() {
-    return this.appEditor.currentTabInfoKey
-  }
 
   private get editableObjectTypeInfos() {
     return editableObjectTypeInfos
