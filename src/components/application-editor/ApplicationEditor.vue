@@ -1,9 +1,5 @@
 <template>
-  <ApplicationContext
-    class="ApplicationEditor"
-    :applicationConfig="applicationConfig"
-    @wheel.native.ctrl.prevent.stop
-  >
+  <div class="ApplicationEditor">
     <ApplicationEditorHeader></ApplicationEditorHeader>
     <div class="body">
       <!-- <ApplicationEditorSidebar class="sidebar"></ApplicationEditorSidebar> -->
@@ -22,31 +18,26 @@
         </DragLayoutContext>
       </div>
     </div>
-  </ApplicationContext>
+  </div>
 </template>
 <script lang="ts">
 import { VueConstructor } from 'vue/types/vue'
 import { Component, Provide, Ref, Vue } from 'vue-property-decorator'
 import { LayoutNode } from '@/components/common/drag-layout/DragLayoutInterface'
-import ApplicationConfig from '@/core/model/ApplicationConfig'
-import EditableObject from '@/core/model/EditableObject'
+import EditableObject from '@/core/editable-object/EditableObject'
 import defaultLayout from './default-layout'
 
-import ApplicationContext from '@/components/application-context/ApplicationContext.vue'
 import ApplicationEditorHeader from './ApplicationEditorHeader.vue'
 import DragLayoutContext from '@/components/common/drag-layout/DragLayoutContext.vue'
 import ObjectEditorTabs from './object-editor-tabs/ObjectEditorTabs.vue'
-import EditableObjectExplorer from '@/components/application-panel/editable-object-explorer/EditableObjectExplorer.vue'
-
-import File from '@/core/file-model/File'
-import VueFileData from '@/core/file-model/file-data/VueFileData'
+import Project from '@/core/model/Project'
+import File from '@/core/model/File'
+import VueFileData from '@/core/editable-object/VueFileData'
 
 @Component({
   name: 'ApplicationEditor',
   components: {
-    ApplicationContext,
     ApplicationEditorHeader,
-    EditableObjectExplorer,
     DragLayoutContext,
     ObjectEditorTabs,
   }
@@ -58,8 +49,7 @@ export default class ApplicationEditor extends Vue {
   @Ref()
   public objectEditorTabs!: ObjectEditorTabs
 
-  /** 应用配置(实体) */
-  public applicationConfig: ApplicationConfig | null = null
+  public project: Project = new Project()
 
   /** 当前激活的对象编辑器的KEY */
   public currentTabInfoKey = ''
@@ -78,7 +68,7 @@ export default class ApplicationEditor extends Vue {
     const file = new File()
     file.fileName = 'app.vue'
     file.content = `<template>
-  <p>{{ greeting }} World!</p>
+  <ApplicationContext>{{ greeting }} World!</ApplicationContext>
 </template>
 
 <script>

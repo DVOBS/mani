@@ -1,6 +1,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import File from '@/core/file-model/File'
 import { compile } from 'vue-template-compiler'
+
+import File from '@/core/model/File'
 
 @Component
 export default class VueFileHandler extends Vue {
@@ -12,6 +13,9 @@ export default class VueFileHandler extends Vue {
   }
 
   public get ast() {
-    return compile(this.content).ast
+    const ast = compile(this.content, {
+      outputSourceRange: true
+    }).ast
+    return ast
   }
 } 

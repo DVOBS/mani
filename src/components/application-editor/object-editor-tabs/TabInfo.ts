@@ -1,5 +1,5 @@
 import { VueConstructor } from "vue/types/vue";
-import EditableObject from "@/core/model/EditableObject";
+import EditableObject from "@/core/editable-object/EditableObject";
 
 export default interface TabInfo {
   object: EditableObject;

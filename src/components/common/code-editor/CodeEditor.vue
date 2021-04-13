@@ -6,7 +6,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 import { addListener, removeListener } from 'resize-detector'
 import codemirror from 'codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -15,18 +15,30 @@ import 'codemirror/mode/vue/vue.js'
 
 @Component
 export default class CodeEditor extends Vue {
+  @Prop()
+  private value!: string
+
   private cminstance!: codemirror.EditorFromTextArea;
+  private locked = false
 
   public setContent(content: string) {
+    this.locked = true
     this.cminstance.setValue(content)
+    this.locked = false
   }
 
   private initialize() {
-     this.cminstance  = codemirror.fromTextArea(this.$refs.textarea as HTMLTextAreaElement, {
-       theme: 'material-darker',
-       lineNumbers: true,
-       mode: 'vue'
-     })
+    this.cminstance  = codemirror.fromTextArea(this.$refs.textarea as HTMLTextAreaElement, {
+      theme: 'material-darker',
+      lineNumbers: true,
+      mode: 'vue'
+    })
+    this.cminstance.setValue(this.value)
+    this.cminstance.on('change', () => {
+      if (this.locked) { return }
+      const value = this.cminstance.getValue()
+      this.$emit('input', value)
+    })
   }
 
   private setSize() {

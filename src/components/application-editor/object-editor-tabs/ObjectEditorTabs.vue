@@ -45,7 +45,7 @@
 <script lang="ts">
 import { Component, Ref, Vue, Watch } from "vue-property-decorator"
 import { VueConstructor } from "vue/types/vue"
-import EditableObject from "@/core/model/EditableObject"
+import EditableObject from "@/core/editable-object/EditableObject"
 import ObjectEditorTab from './ObjectEditorTab.vue'
 import draggable from "vuedraggable"
 import TabInfo from "./TabInfo"

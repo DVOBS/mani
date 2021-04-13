@@ -1,7 +1,8 @@
-import EditableObject from '@/core//model/EditableObject';
-import generateId from '@/core/generateId';
-import File from '@/core/file-model/File'
+import EditableObject from '@/core/editable-object/EditableObject';
+import File from '@/core/model/File'
 import VueFileHandler from './VueFileHandler';
+
+import generateId from '@/core/generateId';
 
 /** 应用配置 */
 export default class VueFileData extends EditableObject {

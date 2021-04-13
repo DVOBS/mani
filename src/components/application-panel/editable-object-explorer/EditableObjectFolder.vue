@@ -59,10 +59,8 @@
 <script lang="ts">
 import { Component, Inject, Prop, Vue } from 'vue-property-decorator'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import ApplicationConfig from '@/core/model/ApplicationConfig'
-import ApplicationContext from '@/components/application-context/ApplicationContext.vue'
 import ApplicationEditor from '@/components/application-editor/ApplicationEditor.vue'
-import EditableObject from '@/core/model/EditableObject'
+import EditableObject from '@/core/editable-object/EditableObject'
 import { Button } from 'element-ui'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,7 +71,6 @@ interface TypeInfo {
   constructor: Constructor<EditableObject>;
   icon: string[];
   color: string;
-  getChildren: (applicationConfig: ApplicationConfig) => EditableObject[];
 }
 
 @Component({
@@ -83,9 +80,6 @@ interface TypeInfo {
   },
 })
 export default class EditableObjectFolder extends Vue {
-  @Inject('app-context')
-  public context!: ApplicationContext
-
   @Inject('app-editor')
   public appEditor!: ApplicationEditor
 
@@ -94,7 +88,7 @@ export default class EditableObjectFolder extends Vue {
   public expanded = false;
 
   private get children() {
-    return this.typeInfo.getChildren(this.context.applicationConfig)
+    return [] as EditableObject[]
   }
 
   private createNewObj() {

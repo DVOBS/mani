@@ -1,21 +1,20 @@
 import ObjectEditor from '@/components/object-editor/ObjectEditor.vue'
-import EditableObject from '@/core/model/EditableObject'
-import VueFileData from '@/core/file-model/file-data/VueFileData'
+import EditableObject from '@/core/editable-object/EditableObject'
+import VueFileData from '@/core/editable-object/VueFileData'
 
 import { VueConstructor } from 'vue'
 import PageConfigEditor from '@/components/object-editor/PageConfigEditor.vue'
-import ApplicationConfig from '@/core/model/ApplicationConfig'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line
 type Constructor<T> = new(...args: any[]) => T;
-
 interface EditableObjectTypeInfo {
   name: string;
   constructor: Constructor<EditableObject>;
   editors: VueConstructor[];
   icon: string[];
   color: string;
-  getChildren: (applicationConfig: ApplicationConfig) => EditableObject[];
+  // eslint-disable-next-line
+  getChildren: (applicationConfig: any) => EditableObject[];
 }
 
 export const editableObjectTypeInfos: EditableObjectTypeInfo[] = [
