@@ -1,6 +1,8 @@
 <template>
   <div class="PageConfigEditor">
-    <AxisSpace class="axis-space"></AxisSpace>
+    <AxisSpace class="axis-space">
+      <PagePreviewer :pageConfig="pageConfig"></PagePreviewer>
+    </AxisSpace>
     <CodeEditor
       class="code-editor"
       ref="codeEditor"
@@ -14,11 +16,13 @@ import ObjectEditor from './ObjectEditor.vue';
 import AxisSpace from '@/components/common/axis-space/AxisSpace.vue'
 import CodeEditor from '@/components/common/code-editor/CodeEditor.vue'
 import VueFileEO from '@/core/editable-object/vue-file/VueFileEO';
+import PagePreviewer from '@/components/common/previewer/PagePreviewer.vue'
 
 @Component({
   components: {
     AxisSpace,
-    CodeEditor
+    CodeEditor,
+    PagePreviewer
   }
 })
 export default class PageConfigEditor extends ObjectEditor {
@@ -27,6 +31,10 @@ export default class PageConfigEditor extends ObjectEditor {
 
   private get vueFileEO() {
     return this.tabInfo.object as VueFileEO
+  }
+
+  private get pageConfig() {
+    return this.vueFileEO.VueFileHandler.pageConfig
   }
 
   private get content() {

@@ -9,8 +9,6 @@ export default class VueFileHandler extends Vue {
   @Prop()
   public file!: File
 
-  private locked = false;
-
   public get content() {
     return this.file.content
   }
@@ -65,21 +63,15 @@ export default class VueFileHandler extends Vue {
 
   @Watch('pageConfig', { deep: true })
   private handlePageConfigChange() {
-    if (this.locked) {
-      this.locked = false
-      return
-    } else {
-      console.log('pageConfig')
-      const pageContainerASTElement = this.pageContainerASTElement
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const start = (pageContainerASTElement as any).start || -1
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const end = (pageContainerASTElement?.children[0] as any)?.start || -1
+    const pageContainerASTElement = this.pageContainerASTElement
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const start = (pageContainerASTElement as any).start || -1
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const end = (pageContainerASTElement?.children[0] as any)?.start || -1
 
-      const stratStr = this.content.slice(0, start)
-      const endStr = this.content.slice(end)
-      const newStr = `<PageContainer :width="${this.pageConfig.width}">`
-      this.content = `${stratStr}${newStr}${endStr}`
-    }
+    const stratStr = this.content.slice(0, start)
+    const endStr = this.content.slice(end)
+    const newStr = `<PageContainer :width="${this.pageConfig.width}" :height="${this.pageConfig.height}" :bgColor="${this.pageConfig.bgColor}">`
+    this.content = `${stratStr}${newStr}${endStr}`
   }
 } 

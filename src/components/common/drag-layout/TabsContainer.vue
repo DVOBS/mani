@@ -299,7 +299,7 @@ export default class TabsContainer extends DragContainer {
   }
 
   .body {
-    height: calc(100% - #{$panel-header-height + 1px});
+    height: calc(100% - #{$panel-header-height + 12px});
     border-left: solid 1px $border-color;
     border-right: solid 1px $border-color;
     border-bottom: solid 1px $border-color;

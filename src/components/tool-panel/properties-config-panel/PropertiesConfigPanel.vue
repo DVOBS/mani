@@ -2,8 +2,18 @@
   <div class="PropertiesConfigPanel">
     <div>{{pageConfig}}</div>
     <div v-if="pageConfig">
-      <span>width</span>
-      <input type="number" v-model="pageConfig.width">
+      <div>
+        <span>width</span>
+        <input type="number" v-model="pageConfig.width">
+      </div>
+      <div>
+        <span>height</span>
+        <input type="number" v-model="pageConfig.height">
+      </div>
+      <div>
+        <span>bgColor</span>
+        <input type="color" v-model="pageConfig.bgColor">
+      </div>
     </div>
   </div>
 </template>
